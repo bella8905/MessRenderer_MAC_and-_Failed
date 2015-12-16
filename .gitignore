@@ -1,0 +1,12 @@
+# folders
+common/include
+common/osx_64
+build
+
+# xcode files
+*.xcworkspacedata
+*.xcuserstate
+*.xcscheme
+*.plist
+*.pbxproj
+
