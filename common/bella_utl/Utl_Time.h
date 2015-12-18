@@ -23,7 +23,7 @@ struct STimer{
     }
 
     void EndTimer() {
-        int ElapsedTime = ( clock() - _StartTime ) / CLOCKS_PER_SEC;
+        int ElapsedTime = (int)( ( clock() - _StartTime ) / CLOCKS_PER_SEC );
         int Hours = ElapsedTime / 3600;
         int Minutes = ElapsedTime % 3600 / 60;
         int Seconds = ElapsedTime % 3600 % 60;

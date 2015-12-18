@@ -23,7 +23,7 @@ CLANG_ENABLE_MODULES = NO
 // delimited by whitespace, so any paths with spaces in them need to be properly quoted.
 // [-I]
 
-HEADER_SEARCH_PATHS = common/include
+HEADER_SEARCH_PATHS = common/include common/bella_utl
 
 
 
@@ -56,3 +56,4 @@ PRODUCT_NAME = $(TARGET_NAME)
 
 
 OTHER_LDFLAGS = $(inherited) -framework Cocoa -framework OpenGL -framework IOKit -lglfw3 -lGLEW
+

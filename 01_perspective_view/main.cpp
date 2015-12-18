@@ -24,8 +24,8 @@
 
 using namespace std;
 
-static const char* VS_FILE = "common/shaders/simple.vert";
-static const char* FS_FILE = "common/shaders/simple.frag";
+static const char* VS_FILE = "../common/shaders/simple.vert";
+static const char* FS_FILE = "../common/shaders/simple.frag";
 
 int gWinWidth = 640;
 int gWinHeight = 480;

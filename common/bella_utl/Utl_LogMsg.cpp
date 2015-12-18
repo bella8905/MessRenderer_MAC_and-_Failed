@@ -12,11 +12,16 @@
 #include <iostream>
 #include <time.h>
 
+#ifdef _WIN32
 CONSOLE_SCREEN_BUFFER_INFO ColorReverter::_csbi;
+#endif
+
 ColorReverter* ColorReverter::_instance = 0;
 
 ofstream outFile;
-const string LOG_FILE = "log/GL_LOG.txt";
+
+const string LOG_FILE = "log/GL_LOG.log";
+
 
 ColorModifier ColorMod_Warning( COLOR_WARNING );
 ColorModifier ColorMod_Error( COLOR_ERROR );
@@ -37,7 +42,10 @@ std::ostream& operator<<( std::ostream& os, const ColorModifier& mod) {
 #ifdef _WIN32
     HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute( hstdout, mod.GetColor() );
-#endif  // add something later for osx and linux
+#elif __APPLE__
+    // add something for osx
+    
+#endif
     return os;
 }
 
@@ -48,7 +56,11 @@ std::ostream& operator<<( std::ostream& os, const ColorReverter* rev) {
     HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute( hstdout, rev->_csbi.wAttributes );
 
+#elif __APPLE__
+    // add something for osx
+    
 #endif
+    
     return os;
 }
 
@@ -59,6 +71,11 @@ ColorCout& operator<<( ColorCout& t_os, const  ColorEndl& t_colorEndl) {
     if( t_colorEndl._rvt == 0 ) return t_os;
 #ifdef _WIN32
     t_os.SetColorWritten( false );
+#elif __APPLE__
+    // add something for osx
+    
+#endif
+    
     cout<<t_colorEndl._rvt<<endl; // reset color and flush buffer
 
     if( outFile.is_open() ) {
@@ -67,7 +84,7 @@ ColorCout& operator<<( ColorCout& t_os, const  ColorEndl& t_colorEndl) {
         outFile<<'\n';
     }
 
-#endif
+
     return t_os;
 }
 
@@ -76,7 +93,7 @@ static void _initFileOutput()
 {
     if( !outFile.is_open() )
     {
-        outFile.open( LOG_FILE );
+        outFile.open( LOG_FILE, fstream::out );
         if( !outFile ) {
             cout<<ColorMod_Warning<<"can't open log file. log file not used"<<endl;
             outFile.close();

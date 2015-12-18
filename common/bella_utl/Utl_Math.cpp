@@ -29,6 +29,7 @@ mat4 GetModelMatFromTfms( const vec3& t_Trans, const vec3& t_Rotat, const vec3& 
     return translationMat*rotationMat*scaleMat;
 }
 
+    /*
 bool SamePoints( const vec3& t_p1, const vec3& t_p2 )
 {
     return Equals( t_p1.x, t_p2.x ) && Equals( t_p1.y, t_p2.y ) && Equals( t_p1.z, t_p2.z );
@@ -52,6 +53,8 @@ bool ArePerpendicular( const vec4& t_v1, const vec4& t_v2 )
 {
     return Equals( glm::dot( t_v1, t_v2  ), 0.f );
 }
+     
+     */
 
 mat4 ToMat4( const mat3& t_rot ) {
     mat4 rot(   vec4( t_rot[0], 0.f ),

@@ -22,12 +22,8 @@
 #include <fstream>
 using namespace std;
 
-#ifdef _WIN32
-// enum Color { DARKBLUE = 1, DARKGREEN, DARKTEAL, DARKRED, DARKPINK, DARKYELLOW, GRAY, DARKGRAY, BLUE, GREEN, TEAL, RED, PINK, YELLOW, WHITE };
-enum CoutColor { DARKBLUE = 1, DARKGREEN, DARKTEAL, DARKRED, DARKPINK, DARKYELLOW, GRAY, DARKGRAY, BLUE , /*GREEN*/ COLOR_PASS, TEAL, /*RED*/ COLOR_ERROR, PINK, /*YELLOW*/ COLOR_WARNING, WHITE };
-#else // different set of color for osx and linux
-enum CoutColor { WHAT_EVER_TO_BE_ADD_LATER };
-#endif
+enum CoutColor { COLOR_PASS, COLOR_ERROR, COLOR_WARNING, COLOR_WHITE };
+
 
 extern ofstream outFile;
 extern const string LOG_FILE;
@@ -36,15 +32,39 @@ extern const string LOG_FILE;
 
 class ColorModifier {
 public:
-    ColorModifier() : _color( WHITE ) {}  // set it to something else
+    ColorModifier() : _color( COLOR_WHITE ) {}  // set it to something else
     ColorModifier( CoutColor t_color ) : _color( t_color ) {}
     ~ColorModifier() {}
      
 private:
     CoutColor _color;
+    
+#ifdef _WIN32
+    int _convertColorToConsoleColorID( CoutColor t_color ) {
+        switch( t_color ) {
+            case COLOR_PASS:
+                return 10;
+            case COLOR_ERROR:
+                return 12;
+            case COLOR_WARNING:
+                return 14;
+            case COLOR_WHITE:
+                return 15;
+            default: return -1;
+        }
+        
+        return;
+    }
+#endif
 
 public:
-    CoutColor GetColor() const { return _color; }
+    CoutColor GetColor() const {
+#ifdef _WIN32
+        return _convertColorToConsoleColorID( _color );
+#else
+        return _color;
+#endif
+    }
 };
 
 class ColorReverter {
